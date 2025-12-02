@@ -14,14 +14,16 @@ export async function POST(request: Request) {
 
     const openai = new OpenAI();
 
-    const events = await openai.responses.create({
-      model: MODEL,
-      input: messages,
-      instructions: getDeveloperPrompt(),
-      tools,
-      stream: true,
-      parallel_tool_calls: false,
-    });
+const events = await openai.responses.create({
+  model: MODEL,
+  input: messages,
+  instructions: getDeveloperPrompt(),
+  tools,
+  tool_choice: "none",
+  stream: true,
+  parallel_tool_calls: false,
+});
+
 
     // Create a ReadableStream that emits SSE data
     const stream = new ReadableStream({
